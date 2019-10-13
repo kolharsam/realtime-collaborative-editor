@@ -1,0 +1,10 @@
+.smol-user-card {
+    width: 90%;
+    
+}
+
+.container {
+    height: 50px;
+    width: 60%;
+    overflow: auto;
+}

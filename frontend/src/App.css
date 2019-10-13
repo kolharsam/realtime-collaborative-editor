@@ -1,0 +1,67 @@
+.app {
+  margin: 0 auto;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #282c34;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  text-align: center;
+  padding: 16px 0px;
+}
+
+.edit-area {
+  align-self: center;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  font-size: 20px;
+  outline: none;
+  padding: 24px 16px;
+  width: -webkit-fill-available;
+}
+
+.edit-area:focus {
+  border: 1px solid #282c34;
+}
+
+.page-content {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 40px 150px;
+  height: 100%;
+}
+
+.text-content {
+  width: 100%;
+}
+
+.client-content {
+  width: -webkit-fill-available;
+  display: flex;
+  flex-direction: row;
+  padding: 12px 16px;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left-panel {
+  width: 38%;
+}
+
+.right-panel {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  min-height: 100%;
+}
