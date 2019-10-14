@@ -1,24 +1,25 @@
-import React from "react";
+import React, { Suspense } from "react";
 import io from "socket.io-client";
 import { v1, v4 } from "uuid";
 import GenerateName from "./name-generator";
 import randomColor from "randomcolor";
-import UserCardGroup from './components/UserCardGroup';
-import UserCard from "./components/UserCard";
 
 import "./App.css";
+
+const UserCard = React.lazy(() => import("./components/UserCard"));
+const UserCardGroup = React.lazy(() => import("./components/UserCardGroup"));
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorValue: '',
-      isUserSet: false,
+      editorValue: "",
+      isUserSet: false
     };
     this.APIBase = this.props.localhost;
     this.userAPI = `http://${this.APIBase}:1498`;
     this.socket = io(`http://${this.APIBase}:4040`);
-    this.defaultImage = 'default_profile.svg';
+    this.defaultImage = "default_profile.svg";
     this.avatarAPI = "https://avatars.dicebear.com/v2/avataaars/";
     this.userID = v4();
     this.userName = GenerateName();
@@ -45,9 +46,9 @@ class App extends React.Component {
     if (redisData !== null) {
       this.setState({ editorValue: redisData });
     }
-  } 
+  };
 
-  sessionHandler() {
+  async sessionHandler() {
     let localSt = false;
     if (window.localStorage) {
       console.log("You've got session storage!");
@@ -56,7 +57,7 @@ class App extends React.Component {
       console.error("No session storage support!");
       return;
     }
-    this.userAvatar = this.avatarMaker() || this.defaultImage;
+    this.userAvatar = (await this.avatarMaker()) || this.defaultImage;
     const userObject = {
       id: `${this.userID}`,
       name: `${this.userName}`,
@@ -66,9 +67,13 @@ class App extends React.Component {
 
     if (localSt) {
       localStorage.setItem(this.userKey, JSON.stringify(userObject));
-      fetch(`${this.userAPI}/users`, { method: 'POST', headers: {
-        'Content-Type': 'application/json'
-      }, body: JSON.stringify(userObject) });
+      fetch(`${this.userAPI}/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userObject)
+      });
       this.setState({ isUserSet: true });
     }
   }
@@ -91,7 +96,7 @@ class App extends React.Component {
       this.sessionHandler();
       this.getInitData();
     }
-  
+
     this.socket.on("message", data => {
       this.setState({
         editorValue: data
@@ -117,11 +122,18 @@ class App extends React.Component {
               }}
             >
               <div className="left-panel">
-                <UserCard userKey={this.userKey} />
+                <Suspense fallback={<p>Loading...</p>}>
+                  <UserCard userKey={this.userKey} />
+                </Suspense>
               </div>
               <div className="right-panel">
-                  <span>Shared With</span>
-                  <UserCardGroup userKey={this.userKey} apiBase={this.APIBase} />
+                <span>Shared With</span>
+                <Suspense fallback={<p>Loading...</p>}>
+                  <UserCardGroup
+                    userKey={this.userKey}
+                    apiBase={this.APIBase}
+                  />
+                </Suspense>
               </div>
             </div>
             <div className="text-content">
