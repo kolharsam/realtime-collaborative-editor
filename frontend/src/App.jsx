@@ -18,10 +18,11 @@ class App extends React.Component {
     this.APIBase = this.props.localhost;
     this.userAPI = `http://${this.APIBase}:1498`;
     this.socket = io(`http://${this.APIBase}:4040`);
+    this.defaultImage = 'default_profile.svg';
     this.avatarAPI = "https://avatars.dicebear.com/v2/avataaars/";
     this.userID = v4();
     this.userName = GenerateName();
-    this.userAvatar = '';
+    this.userAvatar = this.defaultImage;
     this.userColor = randomColor({
       luminosity: "bright"
     });
@@ -55,7 +56,7 @@ class App extends React.Component {
       console.error("No session storage support!");
       return;
     }
-    this.userAvatar = this.avatarMaker() || '';
+    this.userAvatar = this.avatarMaker() || this.defaultImage;
     const userObject = {
       id: `${this.userID}`,
       name: `${this.userName}`,
