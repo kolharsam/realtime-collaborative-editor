@@ -1,30 +1,14 @@
 const redis = require('ioredis');
-const fs = require('fs');
-const host = 'localhost';
+const host = '127.0.0.1';
 
 class RedisHandler {
     constructor() {
-        this.Redis = new redis({
-            sentinels: [
-                { host, port: 5000 },
-                { host, port: 5001 },
-                { host, port: 5002 }
-            ],
-            name: 'collab_master'
-        });
-        // this.Redis = new redis();
+        this.Redis = new redis.Cluster([
+                { port: 7000, host },
+                { port: 7001, host },
+                { port: 7002, host },
+        ]);
         this.RedisKey = 'data-collab-editor';
-        this.Redis.monitor((err, monitor) => {
-            let message;
-            monitor.on('monitor', (time, args, source, database) => {
-                message = `${time} : "args" : ${args} "source" : ${source} "database" : ${database}`;
-                fs.writeFile('redis_logs', message, (err) => {
-                    if (err) {
-                        return console.log('There was an error writing to file.');
-                    }
-                });
-            });
-        });
     }
 
     Set(value) {

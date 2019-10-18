@@ -33,8 +33,8 @@ class UserCardGroup extends React.Component {
                 <div className="container">
                     {
                         this.state.liveUsers.map(user => (
-                                <div className="smol-user-card" key={user.name}>
-                                    <img alt="profile-img" src={user.avatar} height={16} loading="lazy" width={16} />
+                                <div className="small-user-card" key={user.name}>
+                                    <img className="profile-img" alt="profile-img" src={user.avatar} height={16} loading="lazy" width={16} />
                                     {user.name}
                                 </div>
                             ))

@@ -1,10 +1,23 @@
-.smol-user-card {
+.small-user-card {
     width: 90%;
-    
 }
 
 .container {
     height: 50px;
     width: 60%;
     overflow: auto;
+}
+
+@media(max-width: 500px) {
+    .container {
+        width: 75%;
+    }
+    .profile-img {
+        display: none;
+    }
+    .small-user-card {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 }

@@ -29,3 +29,12 @@
 .user-id {
     font-size: 11px;
 }
+
+@media(max-width: 500px) {
+    .user-id {
+        display: none;
+    }
+    .user-text {
+        margin-left: 8px;
+    }
+}

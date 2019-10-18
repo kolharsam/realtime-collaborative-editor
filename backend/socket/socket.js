@@ -21,7 +21,7 @@ io.on('disconnect', (event) => {
 
 function createWS() {
     socketServer.listen(socket_port, () => {
-        console.log("WebSockets are open on", socket_port, "🔴");
+        console.log("🔴");
     });
 }
 
